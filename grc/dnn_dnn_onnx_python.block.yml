@@ -1,0 +1,22 @@
+id: dnn_dnn_onnx_python
+label: DNN ONNX Python
+category: '[dnn]'
+
+templates:
+  imports: import dnn
+  make: dnn.dnn_onnx_python(${onnxModelFilePath})
+
+parameters:
+- id: onnxModelFilePath
+  label: ONNX model file path
+  dtype: file_open
+
+inputs:
+- label: Input
+  dtype: message
+
+outputs:
+- label: Output
+  dtype: message
+
+file_format: 1
