@@ -12,10 +12,12 @@ A GNU Radio out-of-tree module that make DNN inference using a specified ONNX mo
 
 ## Installation from source
 
-`git clone https://gitlab.com/librespacefoundation/sdrmakerspace/sdr_dnn`
-`cd sdr_dnn/gnuradio-oot-blocks/ONNX/gr-dnn`
-`mkdir build`
-`cd build`
-`cmake ..`
-`make`
-`sudo make install`
+```
+git clone https://gitlab.com/librespacefoundation/sdrmakerspace/sdr_dnn
+cd sdr_dnn/gnuradio-oot-blocks/ONNX/gr-dnn
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+```
