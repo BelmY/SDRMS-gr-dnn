@@ -50,8 +50,12 @@ class dnn_onnx_python(gr.basic_block):
         self.rep = backend.prepare(self.model, device="CPU")
 
     def handle_msg(self, msg):
-        netInput = numpy.array(pmt.f32vector_elements(pmt.cdr(msg)), dtype=numpy.float32)
-        netInput.shape = (1, 1, 28, 28)
+        if pmt.is_f32vector(pmt.cdr(msg)):
+            netInput = numpy.array(pmt.f32vector_elements(pmt.cdr(msg)), dtype=numpy.float32)
+        else:
+            raise ValueError('Unhandled type')
+
+        netInput.shape = tuple((d.dim_value) for d in self.model.graph.input[0].type.tensor_type.shape.dim)
         netOutput = self.rep.run(netInput)
 
         outputPmt = pmt.cons(pmt.make_dict(), pmt.to_pmt(numpy.array(netOutput, dtype=numpy.float32)))
