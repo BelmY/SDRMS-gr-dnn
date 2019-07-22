@@ -25,6 +25,10 @@ from gnuradio import gr
 import onnx
 import onnxruntime.backend as backend
 import pmt
+import cProfile
+import time
+import pstats
+import io
 
 class dnn_onnx_python(gr.basic_block):
     """
@@ -32,9 +36,11 @@ class dnn_onnx_python(gr.basic_block):
     selected model. The input/output sizes must match with the input/output
     model sizes. Please specify a .onnx file format for the model.
     """
-    def __init__(self, onnxModelFilePath):
+    def __init__(self, onnxModelFilePath, enableProfiling, profilingPrintInterval):
 
         self.onnxModelFilePath = onnxModelFilePath
+        self.enableProfiling = enableProfiling
+        self.profilingPrintInterval = profilingPrintInterval
 
         gr.basic_block.__init__(self,
             name="dnn_onnx_python",
@@ -48,8 +54,17 @@ class dnn_onnx_python(gr.basic_block):
 
         self.model = onnx.load(self.onnxModelFilePath)
         self.rep = backend.prepare(self.model, device="CPU")
+        self.counter = 0
+
+        if self.enableProfiling:
+            self.pr = cProfile.Profile(subcalls=False, builtins=False)
+            self.lastPrintTime = time.time()
 
     def handle_msg(self, msg):
+
+        if self.enableProfiling:
+            self.pr.enable()
+
         if pmt.is_f32vector(pmt.cdr(msg)):
             netInput = numpy.array(pmt.f32vector_elements(pmt.cdr(msg)), dtype=numpy.float32)
         else:
@@ -60,3 +75,13 @@ class dnn_onnx_python(gr.basic_block):
 
         outputPmt = pmt.cons(pmt.make_dict(), pmt.to_pmt(numpy.array(netOutput, dtype=numpy.float32)))
         self.message_port_pub(pmt.intern('Output'), outputPmt)
+
+        if self.enableProfiling:
+            self.pr.disable()
+            if time.time() > self.lastPrintTime + self.profilingPrintInterval:
+                s = io.StringIO()
+                p = pstats.Stats(self.pr, stream=s)
+                p.sort_stats('cumulative')
+                p.print_stats()
+                print(s.getvalue())
+                self.lastPrintTime = time.time()

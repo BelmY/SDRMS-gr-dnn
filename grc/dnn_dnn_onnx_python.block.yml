@@ -4,12 +4,20 @@ category: '[dnn]'
 
 templates:
   imports: import dnn
-  make: dnn.dnn_onnx_python(${onnxModelFilePath})
+  make: dnn.dnn_onnx_python(${onnxModelFilePath}, ${enableProfiling}, ${profilingPrintInterval)
 
 parameters:
 - id: onnxModelFilePath
   label: ONNX model file path
   dtype: file_open
+- id: enableProfiling
+  label: Enable profiling
+  dtype: bool
+  default: 'False'
+- id: profilingPrintInterval
+  label: Profiling print interval (s)
+  dtype: float
+  default: '1.0'
 
 inputs:
 - label: Input
