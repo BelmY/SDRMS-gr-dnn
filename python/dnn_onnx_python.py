@@ -70,7 +70,8 @@ class dnn_onnx_python(gr.basic_block):
         else:
             raise ValueError('Unhandled type')
 
-        netInput.shape = tuple((d.dim_value) for d in self.model.graph.input[0].type.tensor_type.shape.dim)
+        #netInput.shape = tuple((d.dim_value) for d in self.model.graph.input[0].type.tensor_type.shape.dim)
+        netInput.shape = (1,128,2)
         netOutput = self.rep.run(netInput)
 
         outputPmt = pmt.cons(pmt.make_dict(), pmt.to_pmt(numpy.array(netOutput, dtype=numpy.float32)))
