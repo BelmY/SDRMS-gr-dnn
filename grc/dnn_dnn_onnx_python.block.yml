@@ -4,7 +4,7 @@ category: '[dnn]'
 
 templates:
   imports: import dnn
-  make: dnn.dnn_onnx_python(${onnxModelFilePath}, ${enableProfiling}, ${profilingPrintInterval)
+  make: dnn.dnn_onnx_python(${onnxModelFilePath}, ${enableProfiling}, ${profilingPrintInterval})
 
 parameters:
 - id: onnxModelFilePath
