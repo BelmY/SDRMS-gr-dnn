@@ -1,0 +1,237 @@
+options:
+  parameters:
+    author: Kevin JOLY
+    category: Custom
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: Test for ONNX inference
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: classifier_test
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: run
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: Classifier Test
+    window_size: ''
+  states:
+    coordinate: [8, 22]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: batch_size
+  id: variable
+  parameters:
+    comment: ''
+    value: '10'
+  states:
+    coordinate: [280, 20.0]
+    rotation: 0
+    state: true
+- name: input_len
+  id: variable
+  parameters:
+    comment: ''
+    value: 256*batch_size
+  states:
+    coordinate: [184, 20.0]
+    rotation: 0
+    state: enabled
+- name: output_len
+  id: variable
+  parameters:
+    comment: ''
+    value: 1*batch_size
+  states:
+    coordinate: [184, 84.0]
+    rotation: 0
+    state: enabled
+- name: blocks_complex_to_float_0
+  id: blocks_complex_to_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    coordinate: [328, 312.0]
+    rotation: 0
+    state: enabled
+- name: blocks_interleave_0
+  id: blocks_interleave
+  parameters:
+    affinity: ''
+    alias: ''
+    blocksize: '1'
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_streams: '2'
+    type: float
+    vlen: '1'
+  states:
+    coordinate: [520, 312.0]
+    rotation: 0
+    state: enabled
+- name: blocks_pdu_to_tagged_stream_0
+  id: blocks_pdu_to_tagged_stream
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    tag: output_len
+    type: float
+  states:
+    coordinate: [512, 556.0]
+    rotation: 0
+    state: true
+- name: blocks_stream_to_tagged_stream_0
+  id: blocks_stream_to_tagged_stream
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    packet_len: input_len
+    type: float
+    vlen: '1'
+  states:
+    coordinate: [656, 316.0]
+    rotation: 0
+    state: true
+- name: blocks_tagged_stream_to_pdu_0
+  id: blocks_tagged_stream_to_pdu
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    tag: packet_len
+    type: float
+  states:
+    coordinate: [864, 324.0]
+    rotation: 0
+    state: true
+- name: dnn_dnn_onnx_python_0
+  id: dnn_dnn_onnx_python
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    enableProfiling: 'False'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    onnxModelFilePath: ''
+    profilingPrintInterval: '1.0'
+  states:
+    coordinate: [288, 540.0]
+    rotation: 0
+    state: true
+- name: iio_pluto_source_0
+  id: iio_pluto_source
+  parameters:
+    affinity: ''
+    alias: ''
+    auto_filter: 'True'
+    bandwidth: '20000000'
+    bbdc: 'True'
+    buffer_size: '32768'
+    comment: ''
+    filter: ''
+    frequency: '2480000000'
+    gain1: '''manual'''
+    manual_gain1: '64'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    quadrature: 'True'
+    rfdc: 'True'
+    samplerate: '4000000'
+    uri: ip:192.168.2.1
+  states:
+    coordinate: [104, 236.0]
+    rotation: 0
+    state: enabled
+- name: qtgui_time_raster_sink_x_0
+  id: qtgui_time_raster_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    axislabels: 'True'
+    color1: '0'
+    color10: '0'
+    color2: '0'
+    color3: '0'
+    color4: '0'
+    color5: '0'
+    color6: '0'
+    color7: '0'
+    color8: '0'
+    color9: '0'
+    comment: ''
+    grid: 'False'
+    gui_hint: ''
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    mult: '[]'
+    name: '""'
+    ncols: '16'
+    nconnections: '1'
+    nrows: '512'
+    offset: '[]'
+    samp_rate: '1'
+    type: float
+    update_time: '0.10'
+    zmax: '1'
+    zmin: '0'
+  states:
+    coordinate: [768, 540.0]
+    rotation: 0
+    state: enabled
+
+connections:
+- [blocks_complex_to_float_0, '0', blocks_interleave_0, '0']
+- [blocks_complex_to_float_0, '1', blocks_interleave_0, '1']
+- [blocks_interleave_0, '0', blocks_stream_to_tagged_stream_0, '0']
+- [blocks_pdu_to_tagged_stream_0, '0', qtgui_time_raster_sink_x_0, '0']
+- [blocks_stream_to_tagged_stream_0, '0', blocks_tagged_stream_to_pdu_0, '0']
+- [blocks_tagged_stream_to_pdu_0, pdus, dnn_dnn_onnx_python_0, Input]
+- [dnn_dnn_onnx_python_0, Output, blocks_pdu_to_tagged_stream_0, pdus]
+- [iio_pluto_source_0, '0', blocks_complex_to_float_0, '0']
+
+metadata:
+  file_format: 1
