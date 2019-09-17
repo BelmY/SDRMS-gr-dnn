@@ -1,0 +1,61 @@
+id: dnn_dnn_onnx_stream
+label: DNN ONNX Stream
+category: '[dnn]'
+
+templates:
+  imports: |-
+    import dnn
+    import onnxruntime
+  make: dnn.dnn_onnx_stream(${onnx_model_file}, ${onnx_batch_size}, '${onnx_runtime_device}')
+
+#  Make one 'parameters' list entry for every Parameter you want settable from the GUI.
+#     Sub-entries of dictionary:
+#     * id (makes the value accessible as \$keyname, e.g. in the make entry)
+#     * label
+#     * dtype 
+parameters:
+- id: onnx_model_file
+  label: ONNX model file
+  dtype: file_open  
+- id: onnx_batch_size
+  label: Batch size
+  dtype: int
+  default: '1'
+- id: onnx_runtime_device
+  label: Device
+  dtype: enum
+  default: 'GPU'
+  options: ['CPU', 'GPU', 'FPGA']
+
+#  Make one 'inputs' list entry per input. Sub-entries of dictionary:
+#      * label (an identifier for the GUI)
+#      * domain
+#      * dtype
+#      * vlen
+#      * optional (set to 1 for optional inputs) 
+inputs:
+- label: in
+#  domain: ...
+  dtype: float
+#  vlen: ...
+
+#  Make one 'outputs' list entry per output. Sub-entries of dictionary:
+#      * label (an identifier for the GUI)
+#      * dtype
+#      * vlen
+#      * optional (set to 1 for optional inputs) 
+outputs:
+- label: out
+#  domain: ...
+  dtype: float
+ #!-- e.g. int, float, complex, byte, short, xxx_vector, ...--
+
+documentation: |-
+  ONNX Stream block allows to use an ONNX model on a data stream.
+
+  The ONNX Stream block will automaticly take as much data as it is available (or defined by batch size) and it will reshape it to 
+  the input expected by the model. IQ values must be interveaved. 
+  
+  The ONNX Stream block will output directly the output of the ONNX model
+  
+file_format: 1

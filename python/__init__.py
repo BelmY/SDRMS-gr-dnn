@@ -33,4 +33,5 @@ except ImportError:
 
 # import any pure python here
 from .dnn_onnx_python import dnn_onnx_python
+from .dnn_onnx_stream import dnn_onnx_stream
 #

@@ -19,5 +19,6 @@
 # Boston, MA 02110-1301, USA.
 
 install(FILES
-    dnn_dnn_onnx_python.block.yml DESTINATION share/gnuradio/grc/blocks
+    dnn_dnn_onnx_python.block.yml
+    dnn_dnn_onnx_stream.block.yml DESTINATION share/gnuradio/grc/blocks
 )
