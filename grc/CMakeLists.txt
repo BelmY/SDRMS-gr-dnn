@@ -20,5 +20,6 @@
 
 install(FILES
     dnn_dnn_onnx_python.block.yml
-    dnn_dnn_onnx_stream.block.yml DESTINATION share/gnuradio/grc/blocks
+    dnn_dnn_onnx_stream.block.yml
+    dnn_dnn_onnx_sync.block.yml DESTINATION share/gnuradio/grc/blocks
 )

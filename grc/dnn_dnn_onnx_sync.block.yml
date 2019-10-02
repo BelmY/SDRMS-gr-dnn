@@ -1,0 +1,55 @@
+id: dnn_dnn_onnx_sync
+label: DNN ONNX Sync
+category: '[dnn]'
+
+templates:
+  imports: |-
+    import dnn
+    import onnxruntime
+  make: dnn.dnn_onnx_sync(${onnx_model_file}, ${onnx_batch_size}, '${onnx_runtime_device}')
+
+parameters:
+- id: onnx_model_file
+  label: ONNX model file
+  dtype: file_open  
+- id: onnx_batch_size
+  label: Batch size
+  dtype: int
+  default: '1'
+- id: input_size
+  label: Input size
+  dtype: int
+- id: output_size
+  label: Output size
+  dtype: int
+- id: onnx_runtime_device
+  label: Device
+  dtype: enum
+  default: 'GPU'
+  options: ['CPU', 'GPU', 'FPGA']
+
+#  Make one 'inputs' list entry per input. Sub-entries of dictionary:
+#      * label (an identifier for the GUI)
+#      * domain
+#      * dtype
+#      * vlen
+#      * optional (set to 1 for optional inputs) 
+inputs:
+- label: in_0
+#  domain: ...
+  dtype: float
+  vlen: ${input_size}
+
+#  Make one 'outputs' list entry per output. Sub-entries of dictionary:
+#      * label (an identifier for the GUI)
+#      * dtype
+#      * vlen
+#      * optional (set to 1 for optional inputs) 
+outputs:
+- label: out
+#  domain: ...
+  dtype: float
+  vlen: ${output_size}
+ #!-- e.g. int, float, complex, byte, short, xxx_vector, ...--
+  
+file_format: 1
