@@ -1,6 +1,6 @@
 id: dnn_dnn_onnx_python
-label: DNN ONNX Python
-category: '[dnn]'
+label: ONNX PMT
+category: '[DNN]'
 
 templates:
   imports: import dnn

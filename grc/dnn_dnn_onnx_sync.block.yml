@@ -1,6 +1,6 @@
 id: dnn_dnn_onnx_sync
-label: DNN ONNX Sync
-category: '[dnn]'
+label: ONNX Vector
+category: '[DNN]'
 
 templates:
   imports: |-
