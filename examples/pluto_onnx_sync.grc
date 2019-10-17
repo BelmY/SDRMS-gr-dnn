@@ -10,7 +10,7 @@ options:
     gen_linking: dynamic
     generate_options: qt_gui
     hier_block_src_path: '.:'
-    id: onnx_stream_test
+    id: onnx_sync_test
     max_nouts: '0'
     output_language: python
     placement: (0,0)
@@ -36,7 +36,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '1024'
+    value: '128'
   states:
     bus_sink: false
     bus_source: false
@@ -48,7 +48,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '11'
+    value: '10'
   states:
     bus_sink: false
     bus_source: false
@@ -143,7 +143,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [697, 307]
+    coordinate: [699, 307]
     rotation: 0
     state: true
 - name: dnn_dnn_onnx_sync_0
@@ -155,15 +155,15 @@ blocks:
     input_size: 2*input_len
     maxoutbuf: '0'
     minoutbuf: '0'
-    onnx_batch_size: '500'
-    onnx_model_file: /root/models/RES_SIGNN_20190828071811.onnx
+    onnx_batch_size: '200'
+    onnx_model_file: 
     onnx_runtime_device: GPU
     output_size: output_len
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [443, 271]
+    coordinate: [444, 271]
     rotation: 0
     state: true
 - name: iio_pluto_source_0
@@ -177,7 +177,7 @@ blocks:
     buffer_size: '32768'
     comment: ''
     filter: ''
-    frequency: '2480000000'
+    frequency: '2400000000'
     gain1: '''manual'''
     manual_gain1: '64'
     maxoutbuf: ''
@@ -236,7 +236,7 @@ blocks:
     name: '""'
     ncols: output_len
     nconnections: '1'
-    nrows: '256'
+    nrows: '1024'
     offset: '[]'
     samp_rate: '300000'
     type: float
@@ -301,14 +301,14 @@ blocks:
     name: '""'
     nconnections: '1'
     showports: 'False'
-    type: float
+    type: complex
     update_time: '0.10'
     wintype: firdes.WIN_HAMMING
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [675, 28]
+    coordinate: [301, 393]
     rotation: 0
     state: enabled
 
@@ -316,11 +316,11 @@ connections:
 - [blocks_complex_to_float_0, '0', blocks_interleave_0, '0']
 - [blocks_complex_to_float_0, '1', blocks_interleave_0, '1']
 - [blocks_interleave_0, '0', blocks_stream_to_vector_0, '0']
-- [blocks_interleave_0, '0', qtgui_waterfall_sink_x_0, '0']
 - [blocks_stream_to_vector_0, '0', dnn_dnn_onnx_sync_0, '0']
 - [blocks_vector_to_stream_0, '0', qtgui_time_raster_sink_x_1, '0']
 - [dnn_dnn_onnx_sync_0, '0', blocks_vector_to_stream_0, '0']
 - [iio_pluto_source_0, '0', blocks_complex_to_float_0, '0']
+- [iio_pluto_source_0, '0', qtgui_waterfall_sink_x_0, '0']
 
 metadata:
   file_format: 1
