@@ -30,6 +30,8 @@ import time
 
 class dnn_onnx_sync(gr.sync_block):
     """
+    This block use ONNX Python's backend in order to run inference on the selected model.
+    The input/output sizes must match with the input/output model sizes.
     """
 
     # Using ONNX types found in https://github.com/microsoft/onnxruntime/blob/b7cc611563cfd1bafdff14e38fb50ec9c48c3d68/onnxruntime/python/tools/onnxruntime_test.py
@@ -49,7 +51,6 @@ class dnn_onnx_sync(gr.sync_block):
     }
 
     def __init__(self, onnx_model_file, onnx_batch_size, onnx_runtime_device):
-
         self.batch_size = onnx_batch_size
 
         self.session = onnxruntime.InferenceSession(onnx_model_file)

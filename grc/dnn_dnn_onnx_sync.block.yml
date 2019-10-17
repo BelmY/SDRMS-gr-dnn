@@ -2,6 +2,16 @@ id: dnn_dnn_onnx_sync
 label: ONNX Vector
 category: '[DNN]'
 
+documentation: |-
+    DNN ONNX Vector block allows you to execute a ONNX model inside GNU Radio:
+      With this block you will be able to
+        - Load an ONNX model
+        - Define an inference batch size
+        - Configure the size of the input/oupt
+        - Choose the device where the model will be executed
+      Specially this block uses a Sync block from GNU Radio. It requires a vector of for each input and it will produce a vector per each output. If configuration does not match with the model loaded an error will be produced
+      You can find more information in the wiki at https://gitlab.com/librespacefoundation/sdrmakerspace/gr-dnn
+
 templates:
   imports: |-
     import dnn
@@ -62,5 +72,5 @@ outputs:
   dtype: float
   vlen: ${output_size}
  #!-- e.g. int, float, complex, byte, short, xxx_vector, ...--
-  
+
 file_format: 1
