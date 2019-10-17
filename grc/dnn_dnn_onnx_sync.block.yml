@@ -7,6 +7,7 @@ templates:
     import dnn
     import onnxruntime
   make: dnn.dnn_onnx_sync(${onnx_model_file}, ${onnx_batch_size}, '${onnx_runtime_device}')
+  # make: dnn.dnn_onnx_sync(${onnx_model_file}, ${onnx_batch_size}, '${onnx_runtime_device}')
 
 parameters:
 - id: onnx_model_file
@@ -26,7 +27,17 @@ parameters:
   label: Device
   dtype: enum
   default: 'GPU'
-  options: ['CPU', 'GPU', 'FPGA']
+  options: ['CPU', 'GPU']
+
+# Future versions of OnnxRuntime will chage the device/provider methodoly (anyway it is useless nowadays (version 0.5.0))
+# - id: onnxruntime_provicer
+#   label: Provider
+#   dtype: enum
+#   default: 'kCpuExecutionProvider'
+#   options: ['kCpuExecutionProvider','kMklDnnExecutionProvider','kCudaExecutionProvider','kTensorrtExecutionProvider','kNGraphExecutionProvider','kOpenVINOExecutionProvider', 'kNupharExecutionProvider','kBrainSliceExecutionProvider']
+#   options_labels: ['CPU','MKL','CUDA','TensorRT','NGraph','OpenVINO','Nuphar','BrainSlice']
+
+  
 
 #  Make one 'inputs' list entry per input. Sub-entries of dictionary:
 #      * label (an identifier for the GUI)
