@@ -68,10 +68,16 @@ class dnn_onnx_sync(gr.sync_block):
         # Input items have to be same as model inputs
         assert len(input_items) == len(self.model_inputs_shapes)
 
-        input_data = [np.array(input_item[:np.prod(self.model_inputs_shapes[input_idx])]).reshape(self.model_inputs_shapes[input_idx]) for input_idx, input_item in enumerate(input_items)]
+        input_items_data = np.asarray(input_items)
+
+        input_data = [input_items_data[input_idx,:self.batch_size].reshape(input_shape) for input_idx, input_shape in enumerate(self.model_inputs_shapes)]
+        # input_data_norm = [data/np.linalg.norm(data, ord=1, axis=1, keepdims=True) for data in input_data]
+
         outputs = self.backend.run(input_data)
-        # TODO: Use all outputs of the model
-        output_items[0][:] = outputs[0]
+
+        for output_idx, output in enumerate(outputs):
+            output_items[output_idx][:self.batch_size] = output
+
         return self.batch_size
     
 
