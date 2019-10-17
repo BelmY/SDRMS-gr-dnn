@@ -32,9 +32,20 @@ class dnn_onnx_sync(gr.sync_block):
     """
     """
 
+    # Using ONNX types found in https://github.com/microsoft/onnxruntime/blob/b7cc611563cfd1bafdff14e38fb50ec9c48c3d68/onnxruntime/python/tools/onnxruntime_test.py
     ONNX_TYPES = {
-        'tensor(float)': np.float32,
-        'tensor(int)': np.int32
+        'tensor(bool)':     np.bool,
+        'tensor(float16)':  np.float16,
+        'tensor(float)':    np.float32,   
+        'tensor(double)':   np.float64,
+        'tensor(int)':      np.int32,
+        'tensor(int32)':    np.int32,
+        'tensor(int8)':     np.int8,
+        'tensor(uint8)':    np.uint8,
+        'tensor(int16)':    np.int16,
+        'tensor(uint16)':   np.uint16,
+        'tensor(int64)':    np.int64,
+        'tensor(uint64)':   np.uint64
     }
 
     def __init__(self, onnx_model_file, onnx_batch_size, onnx_runtime_device):
