@@ -86,9 +86,10 @@ class dnn_onnx_sync(gr.sync_block):
         # input_data_norm = [data/np.linalg.norm(data, ord=1, axis=1, keepdims=True) for data in input_data]
 
         outputs = self.backend.run(input_data)
-
+        
         for output_idx, output in enumerate(outputs):
-            output_items[output_idx][:self.batch_size] = output
+            # print(output_items[output_idx].shape, output_items[output_idx].ndim, output.shape, output.ndim)    
+            output_items[output_idx][:] = output.reshape(output_items[output_idx].shape)
 
         return self.batch_size
     
