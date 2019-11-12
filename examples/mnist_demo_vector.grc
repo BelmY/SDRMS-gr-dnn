@@ -57,7 +57,7 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: /root/models/mnist/2.bin
+    file: 
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -150,7 +150,7 @@ blocks:
     maxoutbuf: '0'
     minoutbuf: '0'
     onnx_batch_size: '1'
-    onnx_model_file: /root/models/mnist/model.onnx
+    onnx_model_file: 
     onnx_runtime_device: GPU
     output_size: '10'
   states:
