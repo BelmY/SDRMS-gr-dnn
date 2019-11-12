@@ -75,21 +75,21 @@ class dnn_onnx_sync(gr.sync_block):
         # Get model inputs shape with batch "dimension"
         self.model_inputs_shapes  =  [tuple([self.batch_size] + model_input.shape[1:]) for model_input in self.session.get_inputs()]        
         
-
     def work(self, input_items, output_items):
         # Input items have to be same as model inputs
         assert len(input_items) == len(self.model_inputs_shapes)
 
         input_items_data = np.asarray(input_items)
 
+        # Tranform (reshape) input to match the expected input format by the model
         input_data = [input_items_data[input_idx,:self.batch_size].reshape(input_shape) for input_idx, input_shape in enumerate(self.model_inputs_shapes)]
         # input_data_norm = [data/np.linalg.norm(data, ord=1, axis=1, keepdims=True) for data in input_data]
 
         outputs = self.backend.run(input_data)
-        
+                
         for output_idx, output in enumerate(outputs):
-            # print(output_items[output_idx].shape, output_items[output_idx].ndim, output.shape, output.ndim)    
-            output_items[output_idx][:] = output.reshape(output_items[output_idx].shape)
+            #print(output_items[output_idx].shape, output_items[output_idx].ndim, output.shape, output.ndim)    
+            output_items[output_idx][:self.batch_size,:] = output
 
         return self.batch_size
     
