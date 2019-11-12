@@ -24,6 +24,9 @@ options:
     title: Classifier Test
     window_size: ''
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [8, 22]
     rotation: 0
     state: enabled
@@ -35,6 +38,9 @@ blocks:
     comment: ''
     value: '10'
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [280, 20.0]
     rotation: 0
     state: true
@@ -44,6 +50,9 @@ blocks:
     comment: ''
     value: 256*batch_size
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [184, 20.0]
     rotation: 0
     state: enabled
@@ -53,6 +62,9 @@ blocks:
     comment: ''
     value: 1*batch_size
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [184, 84.0]
     rotation: 0
     state: enabled
@@ -66,6 +78,9 @@ blocks:
     minoutbuf: '0'
     vlen: '1'
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [328, 312.0]
     rotation: 0
     state: enabled
@@ -82,6 +97,9 @@ blocks:
     type: float
     vlen: '1'
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [520, 312.0]
     rotation: 0
     state: enabled
@@ -96,6 +114,9 @@ blocks:
     tag: output_len
     type: float
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [512, 556.0]
     rotation: 0
     state: true
@@ -112,6 +133,9 @@ blocks:
     type: float
     vlen: '1'
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [656, 316.0]
     rotation: 0
     state: true
@@ -126,6 +150,9 @@ blocks:
     tag: packet_len
     type: float
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [864, 324.0]
     rotation: 0
     state: true
@@ -141,6 +168,9 @@ blocks:
     onnxModelFilePath: ''
     profilingPrintInterval: '1.0'
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [288, 540.0]
     rotation: 0
     state: true
@@ -165,6 +195,9 @@ blocks:
     samplerate: '4000000'
     uri: ip:192.168.2.1
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [104, 236.0]
     rotation: 0
     state: enabled
@@ -219,6 +252,9 @@ blocks:
     zmax: '1'
     zmin: '0'
   states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
     coordinate: [768, 540.0]
     rotation: 0
     state: enabled
