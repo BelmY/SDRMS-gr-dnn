@@ -1,0 +1,76 @@
+id: dnn_dnn_onnx_sync
+label: ONNX Vector
+category: '[DNN]'
+
+documentation: |-
+    DNN ONNX Vector block allows you to execute a ONNX model inside GNU Radio:
+      With this block you will be able to
+        - Load an ONNX model
+        - Define an inference batch size
+        - Configure the size of the input/oupt
+        - Choose the device where the model will be executed
+      Specially this block uses a Sync block from GNU Radio. It requires a vector of for each input and it will produce a vector per each output. If configuration does not match with the model loaded an error will be produced
+      You can find more information in the wiki at https://gitlab.com/librespacefoundation/sdrmakerspace/gr-dnn
+
+templates:
+  imports: |-
+    import dnn
+    import onnxruntime
+  make: dnn.dnn_onnx_sync(${onnx_model_file}, ${onnx_batch_size}, '${onnx_runtime_device}')
+  # make: dnn.dnn_onnx_sync(${onnx_model_file}, ${onnx_batch_size}, '${onnx_runtime_device}')
+
+parameters:
+- id: onnx_model_file
+  label: ONNX model file
+  dtype: file_open  
+- id: onnx_batch_size
+  label: Batch size
+  dtype: int
+  default: '1'
+- id: input_size
+  label: Input size
+  dtype: int
+- id: output_size
+  label: Output size
+  dtype: int
+- id: onnx_runtime_device
+  label: Device
+  dtype: enum
+  default: 'GPU'
+  options: ['CPU', 'GPU']
+
+# Future versions of OnnxRuntime will chage the device/provider methodoly (anyway it is useless nowadays (version 0.5.0))
+# - id: onnxruntime_provicer
+#   label: Provider
+#   dtype: enum
+#   default: 'kCpuExecutionProvider'
+#   options: ['kCpuExecutionProvider','kMklDnnExecutionProvider','kCudaExecutionProvider','kTensorrtExecutionProvider','kNGraphExecutionProvider','kOpenVINOExecutionProvider', 'kNupharExecutionProvider','kBrainSliceExecutionProvider']
+#   options_labels: ['CPU','MKL','CUDA','TensorRT','NGraph','OpenVINO','Nuphar','BrainSlice']
+
+  
+
+#  Make one 'inputs' list entry per input. Sub-entries of dictionary:
+#      * label (an identifier for the GUI)
+#      * domain
+#      * dtype
+#      * vlen
+#      * optional (set to 1 for optional inputs) 
+inputs:
+- label: in_0
+#  domain: ...
+  dtype: float
+  vlen: ${input_size}
+
+#  Make one 'outputs' list entry per output. Sub-entries of dictionary:
+#      * label (an identifier for the GUI)
+#      * dtype
+#      * vlen
+#      * optional (set to 1 for optional inputs) 
+outputs:
+- label: out
+#  domain: ...
+  dtype: float
+  vlen: ${output_size}
+ #!-- e.g. int, float, complex, byte, short, xxx_vector, ...--
+
+file_format: 1

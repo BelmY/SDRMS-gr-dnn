@@ -32,7 +32,8 @@ endif()
 GR_PYTHON_INSTALL(
     FILES
     __init__.py
-    dnn_onnx_python.py DESTINATION ${GR_PYTHON_DIR}/dnn
+    dnn_onnx_python.py
+    dnn_onnx_sync.py DESTINATION ${GR_PYTHON_DIR}/dnn
 )
 
 ########################################################################
