@@ -54,7 +54,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-mark hold libcudnn7 && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip uninstall onnxruntime
+RUN pip uninstall onnxruntime -y
 RUN pip install 'onnxruntime-gpu>=0.5.0' --force-reinstall
 
 RUN ldconfig
