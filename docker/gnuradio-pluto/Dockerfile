@@ -2,7 +2,7 @@ FROM gnuradio:base
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libxml2         \
-    libxml2-dev     \    
+    libxml2-dev     \
     bison           \
     flex            \
     swig            \
@@ -10,7 +10,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libaio-dev      \
     libgmp-dev      \
     libboost-regex-dev
-    
 
 COPY build_pluto.sh /root/
 
