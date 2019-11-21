@@ -89,7 +89,7 @@ class dnn_onnx_sync(gr.sync_block):
                 
         for output_idx, output in enumerate(outputs):
             #print(output_items[output_idx].shape, output_items[output_idx].ndim, output.shape, output.ndim)    
-            output_items[output_idx][:self.batch_size,:] = output
+            output_items[output_idx][:self.batch_size] = np.squeeze(output)
 
         return self.batch_size
     
