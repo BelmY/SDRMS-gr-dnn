@@ -11,3 +11,5 @@ docker build -t gnuradio:uhd gnuradio-uhd
 docker build -t gnuradio:onnx  gnuradio-onnx
 # Create cuda image to include support for CUDA 10.1
 docker build -t gnuradio:cuda gnuradio-cuda
+# Create zigbee-demo image with gr-ieee802-11 from the wime project
+docker build -t gnuradio:zigbee-demo gnuradio-zigbee-demo
