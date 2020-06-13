@@ -50,20 +50,45 @@ class dnn_onnx_sync(gr.sync_block):
         'tensor(uint64)':   np.uint64
     }
 
+    ONNX_EXECUTION_PROVIDERS = {
+        'CPU':      'CPUExecutionProvider',
+        'GPU':      'CUDAExecutionProvider',
+        'TensorRT': 'TensorrtExecutionProvider',
+        'DNNL':     'DnnlExecutionProvider',
+        'nGraph':   'NGRAPHExecutionProvider',
+        'OpenVINO': 'OpenVINOExecutionProvider',
+        'NUPHAR':   'NupharExecutionProvider'
+    }
+
     def __init__(self, onnx_model_file, onnx_batch_size, onnx_runtime_device):
+
         self.batch_size = onnx_batch_size
 
         self.session = onnxruntime.InferenceSession(onnx_model_file)
-        # Device selecction is still not working on python and depends on the package installed (onnxruntime[gpu] 0.5.0)
-        self.backend = backend.prepare(self.session, device=onnx_runtime_device)     
+        
+        # Model metadata information
+        # print(f"Model description:    {self.session.get_modelmeta().description}")
+        # print(f"Model domain:         {self.session.get_modelmeta().domain}")
+        # print(f"Model graph name:     {self.session.get_modelmeta().graph_name}")
+        # print(f"Model producer name:  {self.session.get_modelmeta().producer_name}")
+        # print(f"Model version:        {self.session.get_modelmeta().version}")
 
-        print("Model inputs:")
-        for sess_input in  self.session.get_inputs():
+        print(f"Model inputs ({len(self.session.get_inputs())}):")
+        for sess_input in self.session.get_inputs():
             print("  -", sess_input.name, sess_input.shape)
 
-        print("Model outputs:")
-        for sess_output in  self.session.get_outputs():
+        print(f"Model outputs ({len(self.session.get_outputs())}):")
+        for sess_output in self.session.get_outputs():
             print("  -", sess_output.name, sess_output.shape)
+
+        if self.ONNX_EXECUTION_PROVIDERS[onnx_runtime_device] in self.session.get_providers():
+            execution_providers = self.session.get_providers()
+            execution_providers.insert(0, execution_providers.pop(execution_providers.index(self.ONNX_EXECUTION_PROVIDERS[onnx_runtime_device])))
+            self.session.set_providers(execution_providers)
+        else:
+            print(f"Device {onnx_runtime_device} is not supported, using default device")
+
+        self.backend = backend.prepare(self.session)  
 
         gr.sync_block.__init__(self,
             name="dnn_onnx_sync",
