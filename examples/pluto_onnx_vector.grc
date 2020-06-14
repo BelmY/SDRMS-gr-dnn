@@ -156,7 +156,7 @@ blocks:
     maxoutbuf: '0'
     minoutbuf: '0'
     onnx_batch_size: '200'
-    onnx_model_file: /root/models/VGG_RML2016.10b_20190426084923.onnx
+    onnx_model_file: 
     onnx_runtime_device: GPU
     output_size: output_len
   states:
