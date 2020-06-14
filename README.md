@@ -15,8 +15,8 @@ A GNU Radio out-of-tree (OOT) module that allows us to run machine learning infe
 * GNU Radio ( >= 3.8)
 * CMake ( >= 3.8)
 * Python (>= 3.6)
-* ONNX ( == 1.5.0)
-* ONNX Runtime ( == 0.5.0)
+* ONNX ( == 1.6.0)
+* ONNX Runtime ( == 1.0.0)
 * git
 
 ## Installation from source
@@ -37,17 +37,21 @@ There are two different block implementations both under the category **DNN**
 
 ### Message passing and Polimorphic types (PMTs)
 
-This implementation uses the [message passing interface](https://wiki.gnuradio.org/index.php/Guided_Tutorial_Programming_Topics#5.3_Message_Passing) and it should be beared in mind when designing a flow graph with this block.
+This implementation uses the [message passing interface](https://wiki.gnuradio.org/index.php/Guided_Tutorial_Programming_Topics#5.3_Message_Passing).
 
-This implementaion has some limitations due to the buffer size and PMTs.
+This implementaion has some limitations due to the buffer size and PMTs. Due to these limitations **the block is not longer under development**.
 
-An example of its usage can be found in [*classifier_test.grc*](./examples/classifier_test.grc).
+You can find two examples on how to use the PMT block: 
+- Using the MNIST dataset in [*mnist_demo_pmt.grc*](./examples/mnist_demo_pmt.grc) you can read more about this example [here](https://gitlab.com/librespacefoundation/sdrmakerspace/gr-dnn/-/wikis/examples/MNIST-dataset).
+- Using a SDR device in [*pluto_onnx_pmt.grc*](./examples/mnist_demo_pmt.grc).
 
 ### Stream and Vector
 
 This implementation uses [streams (synchronous block)](https://wiki.gnuradio.org/index.php/BlocksCodingGuide#Synchronous_Block) and vecors and it should be beared in mind when designing a flow graph with this block.
 
-An example of its usage can be found in [*pluto_onnx_sync.grd*](./examples/pluto_onnx_sync.grc)
+You can find two examples on hot wo use the stream block:
+- Using the MNIST dataset in [*mnist_demo_vector.grc*](./examples/mnist_demo_vector.grc) 
+- Using a SDR device in [*pluto_onnx_vector.grc*](./examples/pluto_onnx_vector.grc) you can read more about this example [here](https://gitlab.com/librespacefoundation/sdrmakerspace/gr-dnn/-/wikis/examples/SDR-with-ADALM-PLUTO).
 
 ## Disclaimer
 
